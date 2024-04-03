@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float speed;
     Vector2 direction;
+    float movementSpeed;
     Rigidbody2D rigidbody;
     Animator animator;
 
@@ -17,8 +18,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        direction = new (Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        direction = direction.normalized;
+        direction = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        movementSpeed = Mathf.Clamp(direction.magnitude, 0.0f, 1.0f);
+        direction.Normalize();
+        FlipPlayer();
+        Animate();
     }
 
     private void FixedUpdate()
@@ -33,5 +37,27 @@ public class PlayerController : MonoBehaviour
         var scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
+    }
+
+    void FlipPlayer()
+    {
+        if (facingRight == false && direction.x > 0)
+        {
+            Flip();
+        }
+        else if (facingRight == true && direction.x < 0)
+        {
+            Flip();
+        }
+    }
+
+    void Animate()
+    {
+        if (direction != Vector2.zero)
+        {
+            animator.SetFloat("Horizontal", direction.x);
+            animator.SetFloat("Vertical", direction.y);
+        } 
+        animator.SetFloat("Speed", movementSpeed);
     }
 }
