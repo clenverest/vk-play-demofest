@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public Dialogue dialogue;
+    [SerializeField] Dialogue dialogue;
 
     public void TriggerDialogue()
     {
-        //FindAnyObjectByType<DialogueManager>().StartDialogue(dialogue);
+        FindAnyObjectByType<DialogueManager>().StartDialogue(dialogue);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float speed;
-    Vector2 direction;
-    float movementSpeed;
-    Rigidbody2D rigidbody;
-    Animator animator;
+    [SerializeField] private float speed;
+    private Vector2 direction;
+    private float movementSpeed;
+    private Rigidbody2D rigidbody;
+    private Animator animator;
+    private DialogueManager dialogueManager;
+    private bool isActive = true;
+
+    private void Awake()
+    {
+        dialogueManager = FindObjectOfType<DialogueManager>();
+    }
 
     void Start()
     {
@@ -18,16 +25,21 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        direction = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (isActive)
+        {
+            direction = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        }
         movementSpeed = Mathf.Clamp(direction.magnitude, 0.0f, 1.0f);
         direction.Normalize();
         FlipPlayer();
         Animate();
+        InteractionWithDialog();
     }
 
     private void FixedUpdate()
     {
-        rigidbody.MovePosition(rigidbody.position + direction * speed * Time.fixedDeltaTime); ;
+        if (isActive)
+            rigidbody.MovePosition(rigidbody.position + direction * speed * Time.fixedDeltaTime);
     }
 
     bool facingRight = true;
@@ -59,5 +71,19 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("Vertical", direction.y);
         } 
         animator.SetFloat("Speed", movementSpeed);
+    }
+
+    private void InteractionWithDialog()
+    {
+        if (dialogueManager.IsDialogueActive())
+        {
+            isActive = false;
+            animator.SetBool("IsDialogueActive", true);
+        }
+        else
+        {
+            isActive = true;
+            animator.SetBool("IsDialogueActive", false);
+        }
     }
 }

@@ -2,25 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI dialogueText;
     [SerializeField] TextMeshProUGUI nameText;
-    [SerializeField] GameObject Dialogue;
+    [SerializeField] GameObject icon;
+    [SerializeField] GameObject dialogue;
+    Animator animatorIcon;
+    Animator animatorDialogue;
+    private PlayerController player;
+    private bool isDialogueActive = false;
 
-    private Queue<string> speeches;
+    private Queue<DialogueNode> speeches;
 
     private void Start()
     {
-        speeches = new Queue<string>();
+        speeches = new Queue<DialogueNode>();
+        animatorIcon = icon.GetComponent<Animator>();
+        animatorDialogue = dialogue.GetComponent<Animator>();
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
+        DialogueOn();
         speeches.Clear();
+        animatorDialogue.SetBool(Animator.StringToHash("Start"), true);
 
-        foreach (var speech in dialogue.speeches)
+        foreach (var speech in dialogue.Speeches())
         {
             speeches.Enqueue(speech);
         }
@@ -35,10 +45,11 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        var nameAndSentence = speeches.Dequeue().Split(new[] { ':' }, 2);
-        nameText.text = nameAndSentence[0];
+        var dialogueNode = speeches.Dequeue();
+        nameText.text = dialogueNode.Name();
+        animatorIcon.SetTrigger(dialogueNode.Mood());
         StopAllCoroutines();
-        StartCoroutine(TypeSentence(nameAndSentence[1]));
+        StartCoroutine(TypeSentence(dialogueNode.Text()));
 
     }
 
@@ -48,12 +59,25 @@ public class DialogueManager : MonoBehaviour
         foreach (var letter in sentence)
         {
             dialogueText.text += letter;
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
     public void EndDialogue()
     {
-        //TODO
+        DialogueOff();
+        animatorDialogue.SetBool(Animator.StringToHash("Start"), false);
     }
+
+    public void DialogueOn()
+    {
+        isDialogueActive = true;
+    }
+
+    public void DialogueOff()
+    {
+        isDialogueActive = false;
+    }
+
+    public bool IsDialogueActive() => isDialogueActive;
 }
