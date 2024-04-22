@@ -79,11 +79,15 @@ public class PlayerController : MonoBehaviour
         {
             isActive = false;
             animator.SetBool("IsDialogueActive", true);
+            direction = Vector2.zero;
+        }
+        else if (direction != Vector2.zero)
+        {
+            animator.SetBool("IsDialogueActive", false);
         }
         else
         {
             isActive = true;
-            animator.SetBool("IsDialogueActive", false);
         }
     }
 }
