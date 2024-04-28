@@ -18,7 +18,7 @@ public class DoorScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerDetected)
+        if (playerDetected && Input.GetKeyDown(KeyCode.Return))
         {
             playerGo.transform.position = posToGo.position;
             playerDetected = false;
@@ -30,10 +30,7 @@ public class DoorScript : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerGo = collision.gameObject;
-            if (Vector2.Distance(playerGo.transform.position, transform.position) > 0.3f)
-            {
-                playerDetected = true;
-            }
+            playerDetected = true;
         }
     }
 
