@@ -33,7 +33,10 @@ public class PlayerController : MonoBehaviour
         direction.Normalize();
         FlipPlayer();
         Animate();
-        InteractionWithDialog();
+        if(dialogueManager != null)
+        {
+            InteractionWithDialog();
+        }
     }
 
     private void FixedUpdate()
