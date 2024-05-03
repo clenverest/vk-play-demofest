@@ -120,19 +120,24 @@ public class SecondCutscene : MonoBehaviour
     private bool isActivedScene = false;
     private bool isTextDone = false;
 
-    private void Update()
-    {
-        if (!isActivedScene)
-        {
-            isActivedScene = true;
-            NextScene();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (!isActivedScene)
+    //    {
+    //        isActivedScene = true;
+    //        NextScene();
+    //    }
+    //}
 
     private int i = 0;
     public void NextScene()
     {
-        if(i == speeches.Count && manager.IsDialogueActive())
+        if(i == 0)
+        {
+            StartCoroutine(StartSpeech(currentSpeeches[i]));
+            i++;
+        }
+        else if(i == speeches.Count && manager.IsDialogueActive())
         {
             dialogueAnimator.SetTrigger("SetChoice");
         }
@@ -145,6 +150,12 @@ public class SecondCutscene : MonoBehaviour
         {
             StartCoroutine(ShowBadEnd());
         }
+    }
+
+    IEnumerator StartSpeech(DialogueCutscene dialogue)
+    {
+        yield return new WaitForSeconds(1.8f);
+        manager.StartDialogue(dialogue);
     }
 
     IEnumerator ShowBadEnd()

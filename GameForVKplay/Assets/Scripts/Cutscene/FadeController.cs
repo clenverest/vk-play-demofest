@@ -5,6 +5,8 @@ using UnityEngine;
 public class FadeController : MonoBehaviour
 {
     [SerializeField] private GameObject scene;
+    [SerializeField] private GameObject managerCutscene;
+    private SecondCutscene manager;
     private Animator animatorScene;
     private Animator animator;
 
@@ -12,6 +14,12 @@ public class FadeController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animatorScene = scene.GetComponent<Animator>();
+        manager = managerCutscene.GetComponent<SecondCutscene>();
+    }
+
+    public void ShowStart()
+    {
+        manager.NextScene();
     }
 
     public void ShowBadEnd()
