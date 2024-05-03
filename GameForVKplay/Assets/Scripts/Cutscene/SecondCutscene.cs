@@ -12,9 +12,10 @@ public class SecondCutscene : MonoBehaviour
     private List<DialogueCutscene> currentSpeeches;
     [SerializeField] private GameObject cutscene;
     [SerializeField] private GameObject dialogue;
-    [SerializeField] private GameObject choice;
-    Animator cutsceneAnimator;
-    Animator dialogueAnimator;
+    [SerializeField] private GameObject canvasWithScene;
+    private Animator animatorFade;
+    private Animator cutsceneAnimator;
+    private Animator dialogueAnimator;
     [SerializeField] private GameObject dialogueManager;
     private DialogueCutsceneManager manager;
 
@@ -23,6 +24,7 @@ public class SecondCutscene : MonoBehaviour
     {
         cutsceneAnimator = cutscene.GetComponent<Animator>();
         dialogueAnimator = dialogue.GetComponent<Animator>();
+        animatorFade = canvasWithScene.GetComponent<Animator>();
         manager = dialogueManager.GetComponent<DialogueCutsceneManager>();
         var nameFriend = "Тейвел";
         var nameLola = "Лола";
@@ -134,12 +136,21 @@ public class SecondCutscene : MonoBehaviour
         {
             dialogueAnimator.SetTrigger("SetChoice");
         }
-
-        if (manager.IsSpeechesCountIsZero() && !manager.IsDialogueActive() && i < currentSpeeches.Count)
+        else if (manager.IsSpeechesCountIsZero() && !manager.IsDialogueActive() && i < currentSpeeches.Count)
         {
             StartCoroutine(Next(currentSpeeches[i]));
             i++;
         }
+        else if (i == currentSpeeches.Count && manager.IsSpeechesCountIsZero() && !manager.IsDialogueActive())
+        {
+            StartCoroutine(ShowBadEnd());
+        }
+    }
+
+    IEnumerator ShowBadEnd()
+    {
+        yield return new WaitForSeconds(3f);
+        animatorFade.SetTrigger("Fade");
     }
 
     IEnumerator Next(DialogueCutscene dialogue)
