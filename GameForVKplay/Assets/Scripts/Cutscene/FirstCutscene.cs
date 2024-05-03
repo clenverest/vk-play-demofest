@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FirstCutscene : MonoBehaviour
 {
-    private DialogueCutscene dillerFirstSpeech;
+    private DialogueCutscene[] speeches;
     [SerializeField] private GameObject cutscene;
     [SerializeField] private GameObject dialogue;
     Animator cutsceneAnimator;
@@ -21,48 +21,64 @@ public class FirstCutscene : MonoBehaviour
         manager = dialogueManager.GetComponent<DialogueCutsceneManager>();
         var nameDiller = "Диллер";
         var nameLola = "Лола";
-        var dillerFirstSentence = "Бубум";
-        var dillerSecondSentence = "Бaбам";
-        dillerFirstSpeech = new DialogueCutscene(new DialogueCutsceneNode[]
+        var dillerFirstSentence = "Слушай, ты мне по большому счету ничего не должна, но видит Бог, твоя мамаша оставила после себя пару неоплаченных долгов.";
+        var lolaFirstSentence = "И сколько там стоило то, что она смыла в унитаз?";
+        var dillerSecondSentence = "Шесть с половиной.";
+        var LolaSecondSentence = "И где мне столько найти за несколько дней? Даже сестра матери потратила последние на кремацию…";
+        var dillerThirdSentence = "Меня не особо волнует, где и как, но если не найдешь до четверга - отправишься за мамочкой вслед, ты меня знаешь…";
+
+        speeches = new DialogueCutscene[]
         {
-            new (nameDiller, dillerFirstSentence),
-            new (nameDiller, dillerSecondSentence)
-        });
+            new (new DialogueCutsceneNode[]
+            {
+                new (nameDiller, dillerFirstSentence)
+            }),
+            new (new DialogueCutsceneNode[]
+            {
+                new (nameLola, lolaFirstSentence)
+            }),
+            new (new DialogueCutsceneNode[]
+            {
+                new (nameDiller, dillerSecondSentence)
+            }),
+            new (new DialogueCutsceneNode[]
+            {
+                new (nameLola, LolaSecondSentence)
+            }),
+            new (new DialogueCutsceneNode[]
+            {
+                new (nameDiller, dillerThirdSentence)
+            })
+        };
     }
 
-    bool isActivedDillerScene = false;
+    bool isActivedScene = false;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (!isActivedDillerScene)
+        if (!isActivedScene)
         {
-            isActivedDillerScene = true;
-            StartCoroutine(DillerScene());
+            isActivedScene = true;
+            NextScene();
         }
     }
 
-    IEnumerator DillerScene()
-    {
-        yield return new WaitForSeconds(3f);
-        manager.StartDialogue(dillerFirstSpeech);
-    }
-
-
-    bool isActivedLolaScene = false;
-
+    private int i = 0;
     public void NextScene()
     {
-        if(!isActivedLolaScene && manager.IsSpeechesCountIsZero() && !manager.IsDialogueActive())
+        if (manager.IsSpeechesCountIsZero() && !manager.IsDialogueActive() && i < speeches.Length)
         {
-            isActivedLolaScene = true;
-            StartCoroutine(LolaScene());
+            StartCoroutine(Next(speeches[i]));
+            i++;
         }
     }
 
-    IEnumerator LolaScene()
+
+    IEnumerator Next(DialogueCutscene dialogue)
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.8f);
         cutsceneAnimator.SetTrigger("Next");
+        yield return new WaitForSeconds(1.8f);
+        manager.StartDialogue(dialogue);
     }
 }

@@ -14,10 +14,13 @@ public class DialogueCutsceneManager : MonoBehaviour
 
     private Queue<DialogueCutsceneNode> speeches;
 
+    private bool isFreeze;
+
     private void Start()
     {
         speeches = new Queue<DialogueCutsceneNode>();
         animatorDialogue = dialogue.GetComponent<Animator>();
+        isFreeze = false;
     }
 
     public void StartDialogue(DialogueCutscene dialogue)
@@ -47,14 +50,18 @@ public class DialogueCutsceneManager : MonoBehaviour
         StartCoroutine(TypeSentence(dialogueNode.Text()));
     }
 
+    private bool isTextDone;
+
     IEnumerator TypeSentence(string sentence)
     {
+        isTextDone = false;
         dialogueText.text = "";
         foreach (var letter in sentence)
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
+        isTextDone = true;
     }
 
     public void EndDialogue()
@@ -73,7 +80,11 @@ public class DialogueCutsceneManager : MonoBehaviour
         isDialogueActive = false;
     }
 
+
     public bool IsDialogueActive() => isDialogueActive;
 
     public bool IsSpeechesCountIsZero() => speeches.Count == 0;
+    public bool IsSpeechesCountIsOne() => speeches.Count == 1;
+
+    public bool IsTextDone() => isTextDone;
 }
