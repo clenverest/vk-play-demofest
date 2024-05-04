@@ -5,15 +5,12 @@ using UnityEngine;
 
 public class ThirdCutscene : MonoBehaviour
 {
-
     private List<DialogueCutscene> speeches;
     private List<DialogueCutscene> choiceToAdree;
     private List<DialogueCutscene> choiceToForego;
     private List<DialogueCutscene> currentSpeeches;
     [SerializeField] private GameObject cutscene;
     [SerializeField] private GameObject dialogue;
-    [SerializeField] private GameObject canvasWithScene;
-    private Animator animatorFade;
     private Animator cutsceneAnimator;
     private Animator dialogueAnimator;
     [SerializeField] private GameObject dialogueManager;
@@ -27,7 +24,6 @@ public class ThirdCutscene : MonoBehaviour
         trigger = "Next";
         cutsceneAnimator = cutscene.GetComponent<Animator>();
         dialogueAnimator = dialogue.GetComponent<Animator>();
-        animatorFade = canvasWithScene.GetComponent<Animator>();
         manager = dialogueManager.GetComponent<DialogueCutsceneManager>();
         var nameLola = "Лола";
 
@@ -59,17 +55,6 @@ public class ThirdCutscene : MonoBehaviour
 
         currentSpeeches = new(speeches);
     }
-
-    private bool isActivedScene = false;
-
-    //private void Update()
-    //{
-    //    if (!isActivedScene)
-    //    {
-    //        isActivedScene = true;
-    //        NextScene();
-    //    }
-    //}
 
     private int i = 0;
     public void NextScene()

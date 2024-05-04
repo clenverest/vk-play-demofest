@@ -19,7 +19,6 @@ public class SecondCutscene : MonoBehaviour
     [SerializeField] private GameObject dialogueManager;
     private DialogueCutsceneManager manager;
 
-
     void Start()
     {
         cutsceneAnimator = cutscene.GetComponent<Animator>();
@@ -117,18 +116,6 @@ public class SecondCutscene : MonoBehaviour
         currentSpeeches = new(speeches);
     }
 
-    private bool isActivedScene = false;
-    private bool isTextDone = false;
-
-    //private void Update()
-    //{
-    //    if (!isActivedScene)
-    //    {
-    //        isActivedScene = true;
-    //        NextScene();
-    //    }
-    //}
-
     private int i = 0;
     public void NextScene()
     {
@@ -152,19 +139,19 @@ public class SecondCutscene : MonoBehaviour
         }
     }
 
-    IEnumerator StartSpeech(DialogueCutscene dialogue)
+    private IEnumerator StartSpeech(DialogueCutscene dialogue)
     {
         yield return new WaitForSeconds(1.8f);
         manager.StartDialogue(dialogue);
     }
 
-    IEnumerator ShowBadEnd()
+    private IEnumerator ShowBadEnd()
     {
         yield return new WaitForSeconds(3f);
         animatorFade.SetTrigger("Fade");
     }
 
-    IEnumerator Next(DialogueCutscene dialogue)
+    private IEnumerator Next(DialogueCutscene dialogue)
     {
         yield return new WaitForSeconds(1.8f);
         cutsceneAnimator.SetTrigger("Next");

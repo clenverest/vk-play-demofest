@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     }
 
     bool facingRight = true;
-    void Flip()
+    private void Flip()
     {
         facingRight = !facingRight;
         var scaler = transform.localScale;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         transform.localScale = scaler;
     }
 
-    void FlipPlayer()
+    private void FlipPlayer()
     {
         if (facingRight == false && direction.x > 0)
         {
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Animate()
+    private void Animate()
     {
         if (direction != Vector2.zero)
         {
