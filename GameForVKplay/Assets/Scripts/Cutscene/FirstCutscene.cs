@@ -21,33 +21,28 @@ public class FirstCutscene : MonoBehaviour
         manager = dialogueManager.GetComponent<DialogueCutsceneManager>();
         var nameDiller = "Диллер";
         var nameLola = "Лола";
-        var dillerFirstSentence = "Слушай, ты мне по большому счету ничего не должна, но видит Бог, твоя мамаша оставила после себя пару неоплаченных долгов.";
-        var lolaFirstSentence = "И сколько там стоило то, что она смыла в унитаз?";
-        var dillerSecondSentence = "Шесть с половиной.";
-        var LolaSecondSentence = "И где мне столько найти за несколько дней? Даже сестра матери потратила последние на кремацию…";
-        var dillerThirdSentence = "Меня не особо волнует, где и как, но если не найдешь до четверга - отправишься за мамочкой вслед, ты меня знаешь…";
 
         speeches = new DialogueCutscene[]
         {
             new (new DialogueCutsceneNode[]
             {
-                new (nameDiller, dillerFirstSentence)
+                new (nameDiller, "Слушай, ты мне по большому счету ничего не должна, но видит Бог, твоя мамаша оставила после себя пару неоплаченных долгов.")
             }),
             new (new DialogueCutsceneNode[]
             {
-                new (nameLola, lolaFirstSentence)
+                new (nameLola, "И сколько там стоило то, что она смыла в унитаз?")
             }),
             new (new DialogueCutsceneNode[]
             {
-                new (nameDiller, dillerSecondSentence)
+                new (nameDiller, "Шесть с половиной.")
             }),
             new (new DialogueCutsceneNode[]
             {
-                new (nameLola, LolaSecondSentence)
+                new (nameLola, "И где мне столько найти за несколько дней? Даже сестра матери потратила последние на кремацию…")
             }),
             new (new DialogueCutsceneNode[]
             {
-                new (nameDiller, dillerThirdSentence)
+                new (nameDiller, "Меня не особо волнует, где и как, но если не найдешь до четверга - отправишься за мамочкой вслед, ты меня знаешь…")
             })
         };
     }
