@@ -8,11 +8,14 @@ public class GalleryController : MonoBehaviour
     [SerializeField] private GameObject player;
     private PlayerController playerController;
     [SerializeField] Dialogue dialogue;
+    private Inventory inventory;
+    [SerializeField] private GameObject addItem;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         playerController = player.GetComponent<PlayerController>();
+        inventory = player.GetComponent<Inventory>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,6 +30,12 @@ public class GalleryController : MonoBehaviour
     public void ExitSearch()
     {
         animator.SetBool(Animator.StringToHash("Start"), false);
+    }
+
+    public void AddItem()
+    {
+        ExitSearch();
+        inventory.AddItem(addItem);
     }
 
     public void ActivateDialogue()

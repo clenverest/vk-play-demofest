@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class Wardrobe : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Wardrobe : MonoBehaviour
     [SerializeField] private Dialogue dialogue2;
     [SerializeField] private GameObject dialogueManager;
     private DialogueManager manager;
+    private Inventory inventory;
+    [SerializeField] private GameObject addItem;
 
     public void TriggerDialogue(Dialogue dialogue)
     {
@@ -22,6 +25,7 @@ public class Wardrobe : MonoBehaviour
         animator = GetComponent<Animator>();
         playerController = player.GetComponent<PlayerController>();
         manager = dialogueManager.GetComponent<DialogueManager>();
+        inventory = player.GetComponent<Inventory>();
     }
 
     private bool isActivated = false;
@@ -52,6 +56,12 @@ public class Wardrobe : MonoBehaviour
     public void ExitSearch()
     {
         animator.SetBool(Animator.StringToHash("Start"), false);
+    }
+
+    public void AddItem()
+    {
+        ExitSearch();
+        inventory.AddItem(addItem);
     }
 
     public void ActivateDialogue()

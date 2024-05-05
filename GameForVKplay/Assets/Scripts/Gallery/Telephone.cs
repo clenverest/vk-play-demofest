@@ -6,6 +6,14 @@ public class Telephone : MonoBehaviour
 {
     [SerializeField] Dialogue dialogueWithoutNote;
     [SerializeField] Dialogue dialogueWithNote;
+    [SerializeField] private GameObject player;
+    private Inventory inventory;
+    [SerializeField] private GameObject note;
+
+    private void Start()
+    {
+        inventory = player.GetComponent<Inventory>();
+    }
 
     public void TriggerDialogue(Dialogue dialogue)
     {
@@ -16,12 +24,13 @@ public class Telephone : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (true)
+            if (!inventory.Contains(note))
             {
                 TriggerDialogue(dialogueWithoutNote);
             }
             else
             {
+                inventory.DropItem(note);
                 TriggerDialogue(dialogueWithNote);
             }
         }
