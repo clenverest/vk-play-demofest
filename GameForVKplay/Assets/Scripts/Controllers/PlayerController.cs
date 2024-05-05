@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (isActive)
+        if (isActive && !isFreese)
         {
             direction = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         }
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isActive)
+        if (isActive && !isFreese)
             rigidbody.MovePosition(rigidbody.position + direction * speed * Time.fixedDeltaTime);
     }
 
@@ -92,5 +92,18 @@ public class PlayerController : MonoBehaviour
         {
             isActive = true;
         }
+    }
+
+    private bool isFreese = false;
+
+    public void Freeze()
+    {
+        isFreese = true;
+        direction = Vector2.zero;
+    }
+
+    public void Unfreeze()
+    {
+        isFreese = false;
     }
 }
