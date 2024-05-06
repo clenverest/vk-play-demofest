@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
             rigidbody.MovePosition(rigidbody.position + direction * speed * Time.fixedDeltaTime);
     }
 
-    bool facingRight = true;
+    private bool facingRight = true;
     private void Flip()
     {
         facingRight = !facingRight;
