@@ -25,7 +25,7 @@ public class FadeController : MonoBehaviour
     public void ShowBadEnd()
     {
         animatorScene.SetTrigger("SetBadEnd");
-        animator.SetTrigger("Fade");
+        animator.SetTrigger("FadeBad");
     }
 
     public void AnimBadEnd() 

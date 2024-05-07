@@ -102,4 +102,16 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    public bool CheckAmount(GameObject item, int amount)
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.ItemPrefab == item)
+            {
+                return slot.Amount == amount;
+            }
+        }
+
+        return false;
+    }
 }

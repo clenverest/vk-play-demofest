@@ -7,9 +7,9 @@ public class FirstCutscene : MonoBehaviour
 {
     private DialogueCutscene[] speeches;
     [SerializeField] private GameObject cutscene;
-    [SerializeField] private GameObject dialogue;
-    Animator cutsceneAnimator;
-    Animator dialogueAnimator;
+    [SerializeField] private GameObject canvas;
+    private Animator cutsceneAnimator;
+    private Animator canvasAnimator;
     [SerializeField] private GameObject dialogueManager;
     private DialogueCutsceneManager manager;
 
@@ -17,7 +17,7 @@ public class FirstCutscene : MonoBehaviour
     void Start()
     {
         cutsceneAnimator = cutscene.GetComponent<Animator>();
-        dialogueAnimator = dialogue.GetComponent<Animator>();
+        canvasAnimator = canvas.GetComponent<Animator>();
         manager = dialogueManager.GetComponent<DialogueCutsceneManager>();
         var nameDiller = "Диллер";
         var nameLola = "Лола";
@@ -47,15 +47,10 @@ public class FirstCutscene : MonoBehaviour
         };
     }
 
-    bool isActivedScene = false;
-
-    private void Update()
+    public void StartScene()
     {
-        if (!isActivedScene)
-        {
-            isActivedScene = true;
-            NextScene();
-        }
+        manager.StartDialogue(speeches[i]);
+        i++;
     }
 
     private int i = 0;
@@ -65,6 +60,10 @@ public class FirstCutscene : MonoBehaviour
         {
             StartCoroutine(Next(speeches[i]));
             i++;
+        }
+        else if (!manager.IsDialogueActive() && i == speeches.Length)
+        {
+            canvasAnimator.SetTrigger("Next");
         }
     }
 

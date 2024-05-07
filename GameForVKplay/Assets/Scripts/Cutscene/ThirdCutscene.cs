@@ -68,6 +68,10 @@ public class ThirdCutscene : MonoBehaviour
             StartCoroutine(Next(currentSpeeches[i]));
             i++;
         }
+        else if (currentSpeeches.Count == i && manager.IsSpeechesCountIsZero() && !manager.IsDialogueActive())
+        {
+            cutsceneAnimator.SetTrigger("Transition");
+        }
     }
 
     IEnumerator Next(DialogueCutscene dialogue)

@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     private int randomSpot;
     private int randomTimeForPatrol;
     [SerializeField] float speed;
+    [SerializeField] private GameObject minigameManager;
+    private MinigameManager manager;
 
     private bool isPatrolActive;
     bool isDefeat = false;
@@ -20,6 +22,7 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         isPatrolActive = false;
         randomSpot = Random.Range(0, moveSpots.Length);
+        manager = minigameManager.GetComponent<MinigameManager>();
     }
 
     private bool isActionActive = false;
@@ -56,6 +59,7 @@ public class EnemyController : MonoBehaviour
         {
             isGameActive = false;
             animator.SetTrigger("Defeat");
+            manager.SetDefeat();
         }
     }
 

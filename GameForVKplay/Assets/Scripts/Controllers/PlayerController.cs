@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool isFreese = false;
+    private bool isFreese = true;
 
     public void Freeze()
     {

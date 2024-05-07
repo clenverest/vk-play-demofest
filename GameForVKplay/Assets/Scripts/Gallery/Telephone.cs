@@ -10,6 +10,8 @@ public class Telephone : MonoBehaviour
     private Inventory inventory;
     [SerializeField] private GameObject note;
 
+    private bool isDialogActivated = false;
+
     private void Start()
     {
         inventory = player.GetComponent<Inventory>();
@@ -32,7 +34,10 @@ public class Telephone : MonoBehaviour
             {
                 inventory.DropItem(note);
                 TriggerDialogue(dialogueWithNote);
+                isDialogActivated = true;
             }
         }
     }
+
+    public bool IsDialogActivated() => isDialogActivated;
 }

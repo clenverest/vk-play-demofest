@@ -18,6 +18,7 @@ public class SecondCutscene : MonoBehaviour
     private Animator dialogueAnimator;
     [SerializeField] private GameObject dialogueManager;
     private DialogueCutsceneManager manager;
+    private string triggerEnd;
 
     void Start()
     {
@@ -135,7 +136,7 @@ public class SecondCutscene : MonoBehaviour
         }
         else if (i == currentSpeeches.Count && manager.IsSpeechesCountIsZero() && !manager.IsDialogueActive())
         {
-            StartCoroutine(ShowBadEnd());
+            StartCoroutine(ShowEnd());
         }
     }
 
@@ -145,10 +146,10 @@ public class SecondCutscene : MonoBehaviour
         manager.StartDialogue(dialogue);
     }
 
-    private IEnumerator ShowBadEnd()
+    private IEnumerator ShowEnd()
     {
         yield return new WaitForSeconds(3f);
-        animatorFade.SetTrigger("Fade");
+        animatorFade.SetTrigger(triggerEnd);
     }
 
     private IEnumerator Next(DialogueCutscene dialogue)
@@ -161,6 +162,7 @@ public class SecondCutscene : MonoBehaviour
 
     public void Agree()
     {
+        triggerEnd = "FadeBad";
         currentSpeeches.AddRange(choiceToAdree);
         manager.EndDialogue();
         NextScene();
@@ -168,6 +170,7 @@ public class SecondCutscene : MonoBehaviour
 
     public void Forego()
     {
+        triggerEnd = "FadeGood";
         currentSpeeches.AddRange(choiceToForego);
         manager.EndDialogue();
         NextScene();
