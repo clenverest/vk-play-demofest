@@ -70,9 +70,9 @@ public class FirstCutscene : MonoBehaviour
 
     IEnumerator Next(DialogueCutscene dialogue)
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.5f);
         cutsceneAnimator.SetTrigger("Next");
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.5f);
         manager.StartDialogue(dialogue);
     }
 }

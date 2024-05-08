@@ -37,7 +37,7 @@ public class SecondCutscene : MonoBehaviour
             }),
             new (new DialogueCutsceneNode[]
             {
-                new (nameLola, "Ну, у меня уже есть целая тысяча… матушка хоть что-то успела припрятать до того как коньки отбросила…?")
+                new (nameLola, "Ну, у меня уже есть целая тысяча… матушка хоть что-то успела припрятать до того как коньки отбросила…")
             }),
             new (new DialogueCutsceneNode[]
             {
@@ -142,7 +142,7 @@ public class SecondCutscene : MonoBehaviour
 
     private IEnumerator StartSpeech(DialogueCutscene dialogue)
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.5f);
         manager.StartDialogue(dialogue);
     }
 
@@ -154,9 +154,9 @@ public class SecondCutscene : MonoBehaviour
 
     private IEnumerator Next(DialogueCutscene dialogue)
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.5f);
         cutsceneAnimator.SetTrigger("Next");
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.5f);
         manager.StartDialogue(dialogue);
     }
 
